@@ -282,7 +282,7 @@ def print_to_excel(result):
 
 
 ## Исходный код
-* [Git]() - Python 3.5
+* [GitHub](https://github.com/Weltraum/Article-Python-in-aid-of-the-designer.-Tames-API-Kompas-3D.)
 
 ## Ресурсы в помощь:
 1. SDK
