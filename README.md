@@ -14,8 +14,8 @@
 ## Подготовительная операция:
 Убедитесь, что на вашем компьютере установлена программа Компас 3D версии не ниже 14 и Python 3. Вам также необходимо установить [pywin3](http://sourceforge.net/projects/pywin32/) (Python for Windows extensions).
 
-## Подключение к КОМПАСу:
-Система КОМПАС имеет две версии API: API5, которая предоставляет интерфейс KompasObject и API7 которая предоставляет интерфейса IKompasAPIObject. API версии 5 и 7 во многом дублируют свой функционал, но, со слов разработчиков, в 7-ой версии более выражен объектно-ориентированный подход. В данной статье акцент сделан на 7-ю версию.
+## Подключение к Компасу:
+Система Компас имеет две версии API: API5, которая предоставляет интерфейс KompasObject и API7 предоставляющая интерфейс IKompasAPIObject. API версии 5 и 7 во многом дублируют свой функционал, но, со слов разработчиков, в 7-ой версии более выражен объектно-ориентированный подход. В данной статье акцент сделан на 7-ю версию.
 
 Функция подключения выглядит следующим образом:
 
@@ -52,7 +52,7 @@ print(app7.ApplicationName(FullName=True))  # Печатаем название 
 ```
 import subprocess
 
-# Функция проверки, запущена-ли программа КОМПАС 3D
+# Функция проверяет, запущена ли программа КОМПАС 3D
 def is_running():
     proc_list = subprocess.Popen('tasklist /NH /FI "IMAGENAME eq KOMPAS*"',
                                  shell=False,
@@ -63,7 +63,7 @@ def is_running():
 Данная функция проверяет, запущен ли процесс «KOMPAS» [стандартными методами Windows](https://technet.microsoft.com/en-us/library/bb491010.aspx#mainSection). Обратите внимание, что разные версии программы Компас могут иметь разные наименования процессов!
 
 ## Считаем количество листов и их формат:
-Тут всё просто: у нашего документа doc7 имеется интерфейс коллекции листов оформления LayoutSheets. Каждый лист обладает свойством формата и кратности. Для Компаса, начиная с 15 версии интерфейс LayoutSheets доступен не только для файлов чертежей, но и для спецификаций и текстовых докуметов.
+Тут всё просто: у нашего документа doc7 имеется интерфейс коллекции листов оформления LayoutSheets. Каждый лист обладает свойством формата и кратности. Для Компаса, начиная с 15 версии интерфейс LayoutSheets доступен не только для файлов чертежей, но и для спецификаций и текстовых документов.
 
 ```
 # Посчитаем количество листов каждого из формата
@@ -75,7 +75,7 @@ def amount_sheet(doc7):
     return sheets
 ```
 
-Посмотрим на процесс штрудирования SDK, для поиска интересующих нас функций:
+Посмотрим на процесс изучения SDK, для поиска интересующих нас функций:
 
 ![Animated](https://habrastorage.org/files/d71/883/e2c/d71883e2c3654b0fb7ca0bec92b8998c.gif)
 
@@ -84,9 +84,9 @@ def amount_sheet(doc7):
 Здесь нам поможет всё тот же LayoutSheets:
 
 ```
-# Прочитаем масштаб из штампа, ячека №6
+# Прочитаем масштаб из штампа, ячейка №6
 def stamp_scale(doc7):
-    stamp = doc7.LayoutSheets.Item(0).Stamp  # Item(0) указывает на штам первого листа 
+    stamp = doc7.LayoutSheets.Item(0).Stamp  # Item(0) указывает на штамп первого листа 
     return stamp.Text(6).Str    
 ```
 
@@ -142,7 +142,7 @@ def count_TT(doc7, module7):
     text_TT = doc2D.TechnicalDemand.Text
 
     count_tt = 0                                 # Количество пунктов технических требований
-    for i in range(text_TT.Count):               # Прохоим по каждой строчке технических требований
+    for i in range(text_TT.Count):               # Проходим по каждой строчке технических требований
         if text_TT.TextLines[i].Numbering == 1:  # и проверяем, есть ли у строки нумерация
             count_tt += 1                        
 
@@ -172,7 +172,7 @@ def count_dimension(doc7, module7):
                                                                     pythoncom.IID_IDispatch)
         dimensions = module7.ISymbols2DContainer(ISymbols2DContainer)
 
-        # Складываем все необходимые раpмеры
+        # Складываем все необходимые размеры
         count_dim += dimensions.AngleDimensions.Count + \
                      dimensions.ArcDimensions.Count + \
                      dimensions.Bases.Count + \
@@ -202,7 +202,7 @@ def parse_design_documents(paths):
     app7.Visible = True                             # Показываем окно пользователю (если скрыто)
     app7.HideMessage = const7.ksHideMessageNo       # Отвечаем НЕТ на любые вопросы программы
 
-    table = []                                      # Создаём таблицу парметров
+    table = []                                      # Создаём таблицу параметров
     for path in paths:
         doc7 = app7.Documents.Open(PathName=path,
                                    Visible=True,
@@ -234,7 +234,7 @@ if __name__ == "__main__":
     root = Tk()
     root.withdraw()  # Скрываем основное окно и сразу окно выбора файлов
 
-    filenames = askopenfilenames(title="Выберети чертежи деталей",
+    filenames = askopenfilenames(title="Выберете чертежи деталей",
                                  filetypes=[('Компас 3D', '*.cdw'),])
 
     print_to_excel(parse_design_documents(filenames))
@@ -285,5 +285,5 @@ def print_to_excel(result):
 * [GitHub](https://github.com/Weltraum/Article-Python-in-aid-of-the-designer.-Tames-API-Kompas-3D.)
 
 ## Ресурсы в помощь:
-1. SDK
-2. [Forum.ascon.ru](Forum.ascon.ru)
+1. SDK (<i>C:\Program Files\ASCON\KOMPAS-3D V16\SDK\SDK.chm</i>)
+2. [forum.ascon.ru](forum.ascon.ru)
