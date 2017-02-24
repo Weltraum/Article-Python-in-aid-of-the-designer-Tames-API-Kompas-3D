@@ -54,7 +54,9 @@ import subprocess
 
 # Функция проверки, запущена-ли программа КОМПАС 3D
 def is_running():
-    proc_list = subprocess.Popen('tasklist /NH /FI "IMAGENAME eq KOMPAS*"', shell=False, stdout=subprocess.PIPE).communicate()[0]
+    proc_list = subprocess.Popen('tasklist /NH /FI "IMAGENAME eq KOMPAS*"',
+                                 shell=False,
+                                 stdout=subprocess.PIPE).communicate()[0]
     return True if proc_list else False
 ```
 
@@ -134,7 +136,8 @@ IDrawingDocument можно получить от iDocuments с помощью �
 ```
 # Подсчет технических требований, в том случае, если включена автоматическая нумерация
 def count_TT(doc7, module7):
-    doc2D_s = doc7._oleobj_.QueryInterface(module7.NamesToIIDMap['IDrawingDocument'], pythoncom.IID_IDispatch)
+    doc2D_s = doc7._oleobj_.QueryInterface(module7.NamesToIIDMap['IDrawingDocument'],
+                                           pythoncom.IID_IDispatch)
     doc2D = module7.IDrawingDocument(doc2D_s)
     text_TT = doc2D.TechnicalDemand.Text
 
@@ -191,8 +194,8 @@ def count_dimension(doc7, module7):
 
 ```
 def parse_design_documents(paths):
-    is_run = is_running()                           # Установим флаг, который нам говорит, была ли запущена программа до
-                                                    # запуска нашего скрипта
+    is_run = is_running()                           # Установим флаг, который нам говорит, 
+                                                    # запущена ли программа до запуска нашего скрипта
 
     module7, api7, const7 = get_kompas_api7()       # Подключаемся к программе
     app7 = api7.Application                         # Получаем основной интерфейс программы
