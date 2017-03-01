@@ -215,7 +215,7 @@ def parse_design_documents(paths):
         row.update({
             "Filename": doc7.Name,                      # Имя файла
             "CountTD": count_demand(doc7, module7),     # Количество пунктов технических требований
-            "CountDim": count_dimension(doc7, module7), # Количество пунктов технических требований
+            "CountDim": count_dimension(doc7, module7), # Количество размеров на чертеже
         })
         table.append(row)                               # Добавляем строку параметров в таблицу
 
